@@ -19,6 +19,10 @@ public class Main {
 
     makeTestData(articles);
 
+    if(articles.size() > 0) {
+      articleLastId =  articles.get(articles.size() - 1).id;
+    }
+
     System.out.println("== 게시판 v 0.1 ==");
     System.out.println("== 프로그램 시작 ==");
 
