@@ -47,14 +47,28 @@ public class Main {
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
         // rq.getParams().get("id");
         Map<String, String> params = rq.getParams();
-        int id = Integer.parseInt(params.get("id"));
 
-        Article article = articles.get(id - 1);
+        if(params.containsKey("id") == false) {
+          System.out.println("id를 입력해주세요.");
+          continue;
+        }
+
+        int id = 0;
+
+        try {
+          id = Integer.parseInt(params.get("id"));
+        }
+        catch ( NumberFormatException e) {
+          System.out.println("id를 정수 형태로 입력해주세요.");
+          continue;
+        }
 
         if (id > articles.size()) {
           System.out.println("게시물이 존재하지 않습니다.");
-          return;
+          continue;
         }
+
+        Article article = articles.get(id - 1);
 
         System.out.println("- 게시물 상세내용 -");
         System.out.printf("번호 : %s\n", article.id);
