@@ -1,8 +1,6 @@
 package com.sbs.exam.board;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
   static void makeTestData(List<Article> articles) {
@@ -29,11 +27,13 @@ public class Main {
       System.out.printf("명령) ");
       String cmd = sc.nextLine();
 
-      if(cmd.equals("exit")) {
+      Rq rq = new Rq(cmd);
+
+      if(rq.getUrlPath().equals("exit")) {
         System.out.println("== 프로그램 종료 ==");
         break;
       }
-      else if(cmd.equals("/usr/article/list")) {
+      else if(rq.getUrlPath().equals("/usr/article/list")) {
         System.out.println("- 게시물 리스트 -");
         System.out.println("-----------------");
         System.out.println("번호 / 제목");
@@ -58,7 +58,7 @@ public class Main {
         System.out.printf("제목 : %s\n", article.title);
         System.out.printf("내용 : %s\n", article.body);
       }
-      else if(cmd.equals("/usr/article/write")) {
+      else if(rq.getUrlPath().equals("/usr/article/write")) {
         System.out.println("== 게시물 등록 ==");
         System.out.printf("제목 : ");
         String title = sc.nextLine();
@@ -94,5 +94,53 @@ class Article {
   @Override
   public String toString() {
     return String.format("{id : %d, title : \"%s\",  body : \"%s\"}", id, title, body);
+  }
+}
+
+
+class Rq {
+  String url;
+  Map<String, String> params;
+  String urlPath;
+
+  Rq(String url) {
+    this.url = url;
+    params = Util.getUrlParamsFromUrl(this.url);
+    urlPath = Util.getUrlPathFromUrl(this.url);
+  }
+
+  public Map<String, String> getParams() {
+    return params;
+  }
+
+  public String getUrlPath() {
+    return urlPath;
+  }
+}
+
+class Util {
+  static Map<String, String> getUrlParamsFromUrl(String url) {
+    Map<String, String> params = new HashMap<>();
+    String[] urlBits = url.split("\\?", 2);
+
+    if(urlBits.length == 1) {
+      return params;
+    }
+
+    for(String bit : urlBits[1].split("&")) {
+      String[] bits = bit.split("=", 2);
+
+      if(bits.length == 1) {
+        continue;
+      }
+
+      params.put(bits[0], bits[1]);
+    }
+
+    return params;
+  }
+
+  static String getUrlPathFromUrl(String url) {
+    return url.split("\\?", 2)[0];
   }
 }
