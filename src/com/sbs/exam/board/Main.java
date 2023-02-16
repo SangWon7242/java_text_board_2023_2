@@ -44,14 +44,17 @@ public class Main {
           System.out.printf("%d / %s\n", article.id,  article.title);
         }
       }
-      else if(cmd.equals("/usr/article/detail")) {
+      else if(rq.getUrlPath().equals("/usr/article/detail")) {
+        // rq.getParams().get("id");
+        Map<String, String> params = rq.getParams();
+        int id = Integer.parseInt(params.get("id"));
 
-        if (articles.isEmpty()) {
+        Article article = articles.get(id - 1);
+
+        if (id > articles.size()) {
           System.out.println("게시물이 존재하지 않습니다.");
-          continue;
+          return;
         }
-
-        Article article = articles.get(articles.size() - 1);
 
         System.out.println("- 게시물 상세내용 -");
         System.out.printf("번호 : %s\n", article.id);
