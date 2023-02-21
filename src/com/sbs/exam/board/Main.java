@@ -45,8 +45,44 @@ public class Main {
         actionUsrArticleWrite(rq, sc, articles, articleLastId);
         articleLastId++;
       }
+      else if(rq.getUrlPath().equals("/usr/article/modify")) {
+        actionUsrArticleModify(rq, sc, articles);
+      }
     }
     sc.close();
+  }
+
+  private static void actionUsrArticleModify(Rq rq, Scanner sc, List<Article> articles) {
+    Map<String, String> params = rq.getParams();
+
+    if(params.containsKey("id") == false) {
+      System.out.println("id를 입력해주세요.");
+      return;
+    }
+
+    int id = 0;
+
+    try {
+      id = Integer.parseInt(params.get("id"));
+    }
+    catch ( NumberFormatException e) {
+      System.out.println("id를 정수 형태로 입력해주세요.");
+      return;
+    }
+
+    if (id > articles.size()) {
+      System.out.println("게시물이 존재하지 않습니다.");
+      return;
+    }
+
+    Article article = articles.get(id - 1);
+
+    System.out.printf("새 제목 : ");
+    article.title = sc.nextLine();
+    System.out.printf("새 내용 : ");
+    article.body = sc.nextLine();
+
+    System.out.printf("%d번 게시물을 수정하였습니다.\n", article.id);
   }
 
   private static void actionUsrArticleWrite(Rq rq, Scanner sc, List<Article> articles, int articleLastId) {
