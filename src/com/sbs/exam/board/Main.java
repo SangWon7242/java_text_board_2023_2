@@ -6,7 +6,7 @@ public class Main {
   static int articleLastId = 0;
   static List<Article> articles = new ArrayList<>();
   public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = Container.sc;
 
     makeTestData();
 
@@ -19,10 +19,9 @@ public class Main {
 
     while (true) {
       System.out.printf("명령) ");
-      String cmd = sc.nextLine();
+      String cmd = Container.sc.nextLine();
 
       Rq rq = new Rq(cmd);
-      Map<String, String> params = rq.getParams();
 
       if(rq.getUrlPath().equals("exit")) {
         System.out.println("== 프로그램 종료 ==");
@@ -35,13 +34,13 @@ public class Main {
         actionUsrArticleDetail(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/write")) {
-        actionUsrArticleWrite(rq, sc);
+        actionUsrArticleWrite(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/modify")) {
-        actionUsrArticleModify(rq, sc);
+        actionUsrArticleModify(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/delete")) {
-        actionUsrArticleDelete(rq, sc);
+        actionUsrArticleDelete(rq);
       }
     }
     sc.close();
@@ -53,7 +52,7 @@ public class Main {
       articles.add(new Article(id, "제목" + id, "내용" + id));
     }
   }
-  private static void actionUsrArticleDelete(Rq rq, Scanner sc) {
+  private static void actionUsrArticleDelete(Rq rq) {
     Map<String, String> params = rq.getParams();
 
     if(params.containsKey("id") == false) {
@@ -89,7 +88,7 @@ public class Main {
     System.out.printf("%d번 게시물을 삭제하였습니다.\n", foundArticle.id);
   }
 
-  private static void actionUsrArticleModify(Rq rq, Scanner sc) {
+  private static void actionUsrArticleModify(Rq rq) {
     Map<String, String> params = rq.getParams();
 
     if(params.containsKey("id") == false) {
@@ -115,19 +114,19 @@ public class Main {
     Article article = articles.get(id - 1);
 
     System.out.printf("새 제목 : ");
-    article.title = sc.nextLine();
+    article.title = Container.sc.nextLine();
     System.out.printf("새 내용 : ");
-    article.body = sc.nextLine();
+    article.body = Container.sc.nextLine();
 
     System.out.printf("%d번 게시물을 수정하였습니다.\n", article.id);
   }
 
-  private static void actionUsrArticleWrite(Rq rq, Scanner sc) {
+  private static void actionUsrArticleWrite(Rq rq) {
     System.out.println("== 게시물 등록 ==");
     System.out.printf("제목 : ");
-    String title = sc.nextLine();
+    String title = Container.sc.nextLine();
     System.out.printf("내용 : ");
-    String body = sc.nextLine();
+    String body = Container.sc.nextLine();
 
     int id = articleLastId + 1;
     articleLastId = id;
