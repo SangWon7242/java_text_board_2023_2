@@ -38,6 +38,9 @@ public class App {
       else if(rq.getUrlPath().equals("/usr/member/join")) {
         Container.usrMemberController.actionJoin();
       }
+      else if(rq.getUrlPath().equals("/usr/member/login")) {
+        Container.usrMemberController.actionLogin(rq);
+      }
     }
     sc.close();
   }
