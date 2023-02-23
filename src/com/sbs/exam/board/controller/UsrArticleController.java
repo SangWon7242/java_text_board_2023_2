@@ -52,6 +52,11 @@ public class UsrArticleController {
       }
     }
 
+    if (foundArticle == null) {
+      System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+      return;
+    }
+
     articles.remove(foundArticle);
 
     System.out.printf("%d번 게시물을 삭제하였습니다.\n", foundArticle.id);
@@ -113,6 +118,11 @@ public class UsrArticleController {
         foundArticle = article;
         break;
       }
+    }
+
+    if (foundArticle == null) {
+      System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+      return;
     }
 
     System.out.println("- 게시물 상세내용 -");

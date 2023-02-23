@@ -35,6 +35,9 @@ public class App {
       else if(rq.getUrlPath().equals("/usr/article/delete")) {
         Container.usrArticleController.actionDelete(rq);
       }
+      else if(rq.getUrlPath().equals("/usr/member/join")) {
+        Container.usrMemberController.actionJoin();
+      }
     }
     sc.close();
   }
