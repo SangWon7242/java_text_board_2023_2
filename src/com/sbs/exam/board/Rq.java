@@ -18,20 +18,19 @@ public class Rq {
   }
 
   public int getIntParam(String paramName, int defaultValue) {
-    if(params.containsKey(paramName) == false) {
+    if (params.containsKey(paramName) == false) {
       return defaultValue;
     }
 
     try {
       return Integer.parseInt(params.get(paramName));
-    }
-    catch (NumberFormatException e) {
+    } catch (NumberFormatException e) {
       return defaultValue;
     }
   }
 
   public String getParam(String paramName, String defaultValue) {
-    if(params.containsKey(paramName) == false) {
+    if (params.containsKey(paramName) == false) {
       return defaultValue;
     }
 
@@ -40,5 +39,11 @@ public class Rq {
 
   public String getUrlPath() {
     return urlPath;
+  }
+
+
+  public void setSessionAttr(String key, Object value) {
+    Session session = Container.getSession();
+    session.setAttribute(key, value);
   }
 }

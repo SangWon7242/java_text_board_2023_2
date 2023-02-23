@@ -11,8 +11,18 @@ public class App {
     System.out.println("== 프로그램 시작 ==");
 
     while (true) {
-      System.out.printf("명령) ");
+      Session session = Container.getSession();
+      Member loginedMember = (Member) session.getAttribute("loginedMember");
+
+      String promptName = "명령어";
+
+      if(loginedMember != null) {
+        promptName = loginedMember.loginId;
+      }
+
+      System.out.printf("%s) ", promptName);
       String cmd = Container.sc.nextLine();
+
 
       Rq rq = new Rq(cmd);
 
