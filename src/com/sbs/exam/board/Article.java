@@ -1,9 +1,9 @@
 package com.sbs.exam.board;
 
 public class Article {
-  int id;
-  String title;
-  String body;
+  public int id;
+  public String title;
+  public String body;
 
   public Article(int id, String title, String body) {
     this.id = id;
