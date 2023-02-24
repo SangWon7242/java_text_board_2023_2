@@ -1,5 +1,6 @@
 package com.sbs.exam.board;
 
+
 public class Article {
   public int id;
   public String title;
