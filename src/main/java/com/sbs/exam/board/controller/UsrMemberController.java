@@ -82,20 +82,19 @@ public class UsrMemberController {
       return;
     }
 
-    rq.setSessionAttr("loginedMember", member);
+    rq.login(member);
 
     System.out.printf("%s님 환영합니다.\n", member.getLoginId());
   }
 
   public void actionLogout(Rq rq) {
-    Member loginedMember = (Member) Container.getSession().getAttribute("loginedMember");
 
-    if(loginedMember == null) {
-      System.out.println("로그인 후 이용해주세요.");
+    if(rq.isLogined() == false) {
+      System.out.println("로그인 후 사용해주세요.");
       return;
     }
 
-    rq.removeSessionAttr("loginedMember");
+    rq.logout();
     System.out.println("로그아웃 되었습니다.");
   }
 

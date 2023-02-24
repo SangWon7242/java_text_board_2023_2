@@ -16,12 +16,11 @@ public class App {
     System.out.println("== 프로그램 시작 ==");
 
     while (true) {
-      Session session = Container.getSession();
-      Member loginedMember = (Member) session.getAttribute("loginedMember");
-
+      Rq rq = new Rq();
       String promptName = "명령어";
 
-      if(loginedMember != null) {
+      if (rq.isLogined()) {
+        Member loginedMember = rq.getLoginedMember();
         promptName = loginedMember.getLoginId();
       }
 
@@ -29,34 +28,26 @@ public class App {
       String cmd = Container.getSc().nextLine();
 
 
-      Rq rq = new Rq(cmd);
+      rq.setCommand(cmd);
 
-      if(rq.getUrlPath().equals("exit")) {
+      if (rq.getUrlPath().equals("exit")) {
         System.out.println("== 프로그램 종료 ==");
         break;
-      }
-      else if(rq.getUrlPath().equals("/usr/article/list")) {
+      } else if (rq.getUrlPath().equals("/usr/article/list")) {
         Container.getUsrArticleController().showList(rq);
-      }
-      else if(rq.getUrlPath().equals("/usr/article/detail")) {
+      } else if (rq.getUrlPath().equals("/usr/article/detail")) {
         Container.getUsrArticleController().actionDetail(rq);
-      }
-      else if(rq.getUrlPath().equals("/usr/article/write")) {
+      } else if (rq.getUrlPath().equals("/usr/article/write")) {
         Container.getUsrArticleController().actionWrite(rq);
-      }
-      else if(rq.getUrlPath().equals("/usr/article/modify")) {
+      } else if (rq.getUrlPath().equals("/usr/article/modify")) {
         Container.getUsrArticleController().actionModify(rq);
-      }
-      else if(rq.getUrlPath().equals("/usr/article/delete")) {
+      } else if (rq.getUrlPath().equals("/usr/article/delete")) {
         Container.getUsrArticleController().actionDelete(rq);
-      }
-      else if(rq.getUrlPath().equals("/usr/member/join")) {
+      } else if (rq.getUrlPath().equals("/usr/member/join")) {
         Container.getUsrMemberController().actionJoin();
-      }
-      else if(rq.getUrlPath().equals("/usr/member/login")) {
+      } else if (rq.getUrlPath().equals("/usr/member/login")) {
         Container.getUsrMemberController().actionLogin(rq);
-      }
-      else if(rq.getUrlPath().equals("/usr/member/logout")) {
+      } else if (rq.getUrlPath().equals("/usr/member/logout")) {
         Container.getUsrMemberController().actionLogout(rq);
       }
     }

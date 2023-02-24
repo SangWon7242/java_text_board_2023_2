@@ -3,9 +3,11 @@ package com.sbs.exam.board.vo;
 import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.session.Session;
 import com.sbs.exam.board.util.Util;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+@NoArgsConstructor
 public class Rq {
   String url;
   Map<String, String> params;
@@ -51,8 +53,39 @@ public class Rq {
     session.setAttribute(key, value);
   }
 
+  public Object getSessionAttr(String key) {
+    Session session = Container.getSession();
+    return session.getAttribute(key);
+  }
+
   public void removeSessionAttr(String key) {
     Session session = Container.getSession();
     session.removeAttribute(key);
+  }
+
+  public boolean hasSessionAttr(String key) {
+    Session session = Container.getSession();
+    return session.hasAttribute(key);
+  }
+
+  public Member getLoginedMember() {
+    return (Member) getSessionAttr("loginedMember");
+  }
+
+  public boolean isLogined() {
+    return hasSessionAttr("loginedMember");
+  }
+
+  public void setCommand(String url) {
+    urlPath = Util.getUrlPathFromUrl(url);
+    params = Util.getUrlParamsFromUrl(url);
+  }
+
+  public void login(Member member) {
+    setSessionAttr("loginedMember", member);
+  }
+
+  public void logout() {
+    removeSessionAttr("loginedMember");
   }
 }
