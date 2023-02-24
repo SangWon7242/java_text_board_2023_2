@@ -10,8 +10,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class Member {
-  public int id;
-  public String loginId;
-  public String loginPw;
-
+  private int id;
+  private String loginId;
+  private String loginPw;
 }

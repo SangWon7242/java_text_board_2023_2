@@ -18,7 +18,7 @@ public class UsrMemberController {
     makeTestData();
 
     if(members.size() > 0) {
-      memberLastId =  members.get(members.size() - 1).id;
+      memberLastId =  members.get(members.size() - 1).getId();
     }
   }
 
@@ -87,15 +87,6 @@ public class UsrMemberController {
     System.out.printf("%s님 환영합니다.\n", member.getLoginId());
   }
 
-  private Member getMemberLoginId(String loginId) {
-    for(Member member : members) {
-      if(member.getLoginId().equals(loginId)) {
-        return member;
-      }
-    }
-    return null;
-  }
-
   public void actionLogout(Rq rq) {
     Member loginedMember = (Member) Container.getSession().getAttribute("loginedMember");
 
@@ -106,5 +97,14 @@ public class UsrMemberController {
 
     rq.removeSessionAttr("loginedMember");
     System.out.println("로그아웃 되었습니다.");
+  }
+
+  private Member getMemberLoginId(String loginId) {
+    for(Member member : members) {
+      if(member.getLoginId().equals(loginId)) {
+        return member;
+      }
+    }
+    return null;
   }
 }

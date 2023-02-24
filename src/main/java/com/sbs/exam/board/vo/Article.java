@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class Article {
-  public int id;
-  public String title;
-  public String body;
+  private int id;
+  private String title;
+  private String body;
 }

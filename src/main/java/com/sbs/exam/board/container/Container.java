@@ -3,6 +3,7 @@ package com.sbs.exam.board.container;
 import com.sbs.exam.board.session.Session;
 import com.sbs.exam.board.controller.UsrArticleController;
 import com.sbs.exam.board.controller.UsrMemberController;
+import lombok.Data;
 import lombok.Getter;
 
 import java.util.Scanner;

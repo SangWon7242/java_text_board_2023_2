@@ -22,7 +22,7 @@ public class App {
       String promptName = "명령어";
 
       if(loginedMember != null) {
-        promptName = loginedMember.loginId;
+        promptName = loginedMember.getLoginId();
       }
 
       System.out.printf("%s) ", promptName);
