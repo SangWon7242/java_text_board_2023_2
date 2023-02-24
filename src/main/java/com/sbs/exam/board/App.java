@@ -1,11 +1,16 @@
 package com.sbs.exam.board;
 
+import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.session.Session;
+import com.sbs.exam.board.vo.Member;
+import com.sbs.exam.board.vo.Rq;
+
 import java.util.Scanner;
 
 public class App {
 
   public void run() {
-    Scanner sc = Container.sc;
+    Scanner sc = Container.getSc();
 
     System.out.println("== 게시판 v 0.1 ==");
     System.out.println("== 프로그램 시작 ==");
@@ -21,7 +26,7 @@ public class App {
       }
 
       System.out.printf("%s) ", promptName);
-      String cmd = Container.sc.nextLine();
+      String cmd = Container.getSc().nextLine();
 
 
       Rq rq = new Rq(cmd);
@@ -31,28 +36,28 @@ public class App {
         break;
       }
       else if(rq.getUrlPath().equals("/usr/article/list")) {
-        Container.usrArticleController.showList(rq);
+        Container.getUsrArticleController().showList(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
-        Container.usrArticleController.actionDetail(rq);
+        Container.getUsrArticleController().actionDetail(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/write")) {
-        Container.usrArticleController.actionWrite(rq);
+        Container.getUsrArticleController().actionWrite(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/modify")) {
-        Container.usrArticleController.actionModify(rq);
+        Container.getUsrArticleController().actionModify(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/delete")) {
-        Container.usrArticleController.actionDelete(rq);
+        Container.getUsrArticleController().actionDelete(rq);
       }
       else if(rq.getUrlPath().equals("/usr/member/join")) {
-        Container.usrMemberController.actionJoin();
+        Container.getUsrMemberController().actionJoin();
       }
       else if(rq.getUrlPath().equals("/usr/member/login")) {
-        Container.usrMemberController.actionLogin(rq);
+        Container.getUsrMemberController().actionLogin(rq);
       }
       else if(rq.getUrlPath().equals("/usr/member/logout")) {
-        Container.usrMemberController.actionLogout(rq);
+        Container.getUsrMemberController().actionLogout(rq);
       }
     }
     sc.close();

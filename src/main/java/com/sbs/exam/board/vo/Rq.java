@@ -1,4 +1,8 @@
-package com.sbs.exam.board;
+package com.sbs.exam.board.vo;
+
+import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.session.Session;
+import com.sbs.exam.board.util.Util;
 
 import java.util.Map;
 
@@ -7,7 +11,7 @@ public class Rq {
   Map<String, String> params;
   String urlPath;
 
-  Rq(String url) {
+  public Rq(String url) {
     this.url = url;
     params = Util.getUrlParamsFromUrl(this.url);
     urlPath = Util.getUrlPathFromUrl(this.url);
