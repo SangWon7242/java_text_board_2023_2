@@ -1,5 +1,6 @@
 package com.sbs.exam.board.controller;
 
+import com.sbs.exam.board.service.ArticleService;
 import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.vo.Rq;
@@ -9,25 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsrArticleController {
-  int articleLastId;
-  List<Article> articles;
+  private ArticleService articleService;
+  private List<Article> articles;
 
   public UsrArticleController() {
-    articleLastId = 0;
-    articles = new ArrayList<>();
+    articleService = new ArticleService();
+    articles = articleService.getArticles();
 
-    makeTestData();
-
-    if(articles.size() > 0) {
-      articleLastId =  articles.get(articles.size() - 1).getId();
-    }
-  }
-
-  public void makeTestData() {
-    for(int i = 0; i < 100; i++) {
-      int id = i + 1;
-      articles.add(new Article(id, "제목" + id, "내용" + id));
-    }
+    articleService.makeTestData();
   }
 
   public void actionDelete(Rq rq) {
@@ -43,14 +33,14 @@ public class UsrArticleController {
       return;
     }
 
-    Article foundArticle = getArticleById(id);
+    Article foundArticle = articleService.getArticleById(id);
 
     if (foundArticle == null) {
       System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
       return;
     }
 
-    articles.remove(foundArticle);
+    articleService.deleteArticleById(id);
 
     System.out.printf("%d번 게시물을 삭제하였습니다.\n", foundArticle.getId());
   }
@@ -68,7 +58,7 @@ public class UsrArticleController {
       return;
     }
 
-    Article article = getArticleById(id);
+    Article article = articleService.getArticleById(id);
 
     if (article == null) {
       System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -90,13 +80,9 @@ public class UsrArticleController {
     System.out.printf("내용 : ");
     String body = Container.getSc().nextLine();
 
-    int id = articleLastId + 1;
-    articleLastId = id;
+    int id = articleService.write(title, body);
 
-    Article article = new Article(id, title, body);
-
-    articles.add(article);
-    System.out.printf("%d번 게시물이 등록되었습니다.\n", article.getId());
+    System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
 
   public void actionDetail(Rq rq) {
@@ -107,7 +93,7 @@ public class UsrArticleController {
       return;
     }
 
-    Article foundArticle = getArticleById(id);
+    Article foundArticle = articleService.getArticleById(id);
 
     if (foundArticle == null) {
       System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -159,13 +145,4 @@ public class UsrArticleController {
     System.out.println("-----------------");
   }
 
-  private Article getArticleById(int id) {
-    for(Article article : articles) {
-      if(article.getId() == id) {
-        return article;
-      }
-    }
-
-    return null;
-  }
 }
