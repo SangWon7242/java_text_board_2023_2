@@ -15,16 +15,18 @@ public class ArticleRepository {
     articles = new ArrayList<>();
   }
   public List<Article> getArticles(String searchKeyword, String orderBy) {
-    boolean orderByIdDesc = orderBy.equals("idDesc");
+    if(orderBy.equals("idAsc")) {
+      return articles;
+    }
 
-    List<Article> sortedArticles = null;
+    List<Article> sortedArticles = articles;
 
-    if(orderByIdDesc) {
+    if (orderBy.equals("idDesc")) {
       sortedArticles = Util.reverseList(articles);
     }
 
     if(searchKeyword.length() == 0) {
-      return articles;
+      return sortedArticles;
     }
 
     List<Article> filteredArticles = new ArrayList<>();
