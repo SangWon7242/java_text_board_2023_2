@@ -46,7 +46,9 @@ public class ArticleRepository {
 
   public int write(int boardId, int loginedMemberId, String title, String body) {
     int id = lastId + 1;
-    Article article = new Article(id, boardId, loginedMemberId, title, body);
+    String regDate = Util.getNowDateStr();
+    String updateDate = regDate;
+    Article article = new Article(id, regDate, updateDate, boardId, loginedMemberId, title, body);
     articles.add(article);
     lastId = id;
 
@@ -68,5 +70,13 @@ public class ArticleRepository {
     if( article != null ) {
       articles.remove(article);
     }
+  }
+
+  public void modify(int id, String title, String body) {
+    Article article = getArticleById(id);
+
+    article.setTitle(title);
+    article.setBody(body);
+    article.setUpdateDate(Util.getNowDateStr());
   }
 }

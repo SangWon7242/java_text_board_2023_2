@@ -57,9 +57,13 @@ public class UsrArticleController {
     }
 
     System.out.printf("새 제목 : ");
-    article.setTitle(Container.getSc().nextLine());
+    String newTitle = Container.getSc().nextLine().trim();
     System.out.printf("새 내용 : ");
-    article.setBody(Container.getSc().nextLine());
+    String newBody = Container.getSc().nextLine().trim();
+
+    article.setUpdateDate(Util.getNowDateStr());
+
+    articleService.modify(article.getId(), newTitle, newBody);
 
     System.out.printf("%d번 게시물을 수정하였습니다.\n", article.getId());
   }
@@ -110,6 +114,8 @@ public class UsrArticleController {
 
     System.out.println("- 게시물 상세내용 -");
     System.out.printf("번호 : %s\n", foundArticle.getId());
+    System.out.printf("날짜 : %s\n", foundArticle.getRegDate());
+    System.out.printf("수정날짜 : %s\n", foundArticle.getUpdateDate());
     System.out.printf("제목 : %s\n", foundArticle.getTitle());
     System.out.printf("내용 : %s\n", foundArticle.getBody());
     System.out.printf("작성자 : %d번 회원\n", foundArticle.getMemberId());
@@ -121,12 +127,12 @@ public class UsrArticleController {
 
     System.out.println("- 게시물 리스트 -");
     System.out.println("-----------------");
-    System.out.println("번호 / 제목");
+    System.out.println("번호 / 날짜 / 제목");
 
     List<Article> articles = articleService.getArticles(searchKeyword, orderBy);
 
     for( Article article : articles) {
-      System.out.printf("%d / %s\n", article.getId(), article.getTitle());
+      System.out.printf("%d / %s / %s\n", article.getId(), article.getRegDate(), article.getTitle());
     }
 
     System.out.println("-----------------");

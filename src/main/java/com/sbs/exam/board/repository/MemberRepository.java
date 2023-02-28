@@ -1,5 +1,6 @@
 package com.sbs.exam.board.repository;
 
+import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.vo.Member;
 
@@ -16,7 +17,9 @@ public class MemberRepository {
   }
   public int join(String loginId, String loginPw) {
     int id = lastId + 1;
-    Member member = new Member(id, loginId, loginPw);
+    String regDate = Util.getNowDateStr();
+    String updateDate = regDate;
+    Member member = new Member(id, regDate, updateDate, loginId, loginPw);
     members.add(member);
     lastId = id;
 

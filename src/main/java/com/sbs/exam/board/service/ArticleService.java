@@ -36,4 +36,8 @@ public class ArticleService {
   public void deleteArticleById(int id) {
     articleRepository.deleteArticleById(id);
   }
+
+  public void modify(int id, String title, String body) {
+    articleRepository.modify(id, title, body);
+  }
 }
