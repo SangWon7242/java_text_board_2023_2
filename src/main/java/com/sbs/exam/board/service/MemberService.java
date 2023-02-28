@@ -31,4 +31,8 @@ public class MemberService {
   public Member getMemberById(int id) {
     return memberRepository.getMemberById(id);
   }
+
+  public String getWriteNameByBoardId(int memberId) {
+    return memberRepository.getWriteNameByBoardId(memberId);
+  }
 }

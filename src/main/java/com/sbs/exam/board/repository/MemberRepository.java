@@ -44,4 +44,13 @@ public class MemberRepository {
     }
     return null;
   }
+
+  public String getWriteNameByBoardId(int memberId) {
+    for(Member member : members) {
+      if(member.getId() == memberId) {
+        return member.getLoginId();
+      }
+    }
+    return "";
+  }
 }

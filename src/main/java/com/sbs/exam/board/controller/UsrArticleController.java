@@ -123,6 +123,7 @@ public class UsrArticleController {
       return;
     }
 
+    String writerName = memberService.getWriteNameByBoardId(foundArticle.getMemberId());
 
     System.out.println("- 게시물 상세내용 -");
     System.out.printf("번호 : %s\n", foundArticle.getId());
@@ -130,7 +131,7 @@ public class UsrArticleController {
     System.out.printf("수정날짜 : %s\n", foundArticle.getUpdateDate());
     System.out.printf("제목 : %s\n", foundArticle.getTitle());
     System.out.printf("내용 : %s\n", foundArticle.getBody());
-    System.out.printf("작성자 : %s 회원\n", foundArticle.getMemberId());
+    System.out.printf("작성자 : %s\n", writerName);
   }
 
   public void showList(Rq rq) {
