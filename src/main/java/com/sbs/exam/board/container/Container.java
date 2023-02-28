@@ -1,10 +1,14 @@
 package com.sbs.exam.board.container;
 
 import com.sbs.exam.board.repository.ArticleRepository;
+import com.sbs.exam.board.repository.MemberRepository;
 import com.sbs.exam.board.service.ArticleService;
+import com.sbs.exam.board.service.MemberService;
 import com.sbs.exam.board.session.Session;
 import com.sbs.exam.board.controller.UsrArticleController;
 import com.sbs.exam.board.controller.UsrMemberController;
+import com.sbs.exam.board.vo.Member;
+import com.sun.source.tree.MemberSelectTree;
 import lombok.Data;
 import lombok.Getter;
 
@@ -22,19 +26,28 @@ public class Container {
   private static UsrMemberController usrMemberController;
 
   @Getter
+  private static MemberService memberService;
+  @Getter
   private static ArticleService articleService;
 
+  @Getter
+  private static MemberRepository memberRepository;
   @Getter
   private static ArticleRepository articleRepository;
 
   static {
     sc = new Scanner(System.in);
     session = new Session();
-    usrArticleController = new UsrArticleController();
-    usrMemberController = new UsrMemberController();
+
+    memberRepository = new MemberRepository();
+    articleRepository = new ArticleRepository();
 
     articleService = new ArticleService();
-    articleRepository = new ArticleRepository();
+    memberService = new MemberService();
+
+
+    usrArticleController = new UsrArticleController();
+    usrMemberController = new UsrMemberController();
   }
 
   public static Session getSession() {
