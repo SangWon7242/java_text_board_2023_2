@@ -72,12 +72,6 @@ public class UsrMemberController {
   }
 
   public void actionLogout(Rq rq) {
-
-    if(rq.isLogined() == false) {
-      System.out.println("로그인 후 사용해주세요.");
-      return;
-    }
-
     rq.logout();
     System.out.println("로그아웃 되었습니다.");
   }

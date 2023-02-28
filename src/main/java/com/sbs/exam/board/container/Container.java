@@ -1,5 +1,7 @@
 package com.sbs.exam.board.container;
 
+import com.sbs.exam.board.interceptor.NeedLoginInterceptor;
+import com.sbs.exam.board.interceptor.NeedLogoutInterceptor;
 import com.sbs.exam.board.repository.ArticleRepository;
 import com.sbs.exam.board.repository.MemberRepository;
 import com.sbs.exam.board.service.ArticleService;
@@ -20,10 +22,15 @@ public class Container {
   private static Scanner sc;
   @Getter
   private static Session session;
+
   @Getter
-  private static UsrArticleController usrArticleController;
+  private static MemberRepository memberRepository;
   @Getter
-  private static UsrMemberController usrMemberController;
+  private static ArticleRepository articleRepository;
+  @Getter
+  private static NeedLoginInterceptor needLoginInterceptor;
+  @Getter
+  private static NeedLogoutInterceptor needLogoutInterceptor;
 
   @Getter
   private static MemberService memberService;
@@ -31,9 +38,10 @@ public class Container {
   private static ArticleService articleService;
 
   @Getter
-  private static MemberRepository memberRepository;
+  private static UsrArticleController usrArticleController;
   @Getter
-  private static ArticleRepository articleRepository;
+  private static UsrMemberController usrMemberController;
+
 
   static {
     sc = new Scanner(System.in);
@@ -41,6 +49,9 @@ public class Container {
 
     memberRepository = new MemberRepository();
     articleRepository = new ArticleRepository();
+
+    needLoginInterceptor = new NeedLoginInterceptor();
+    needLogoutInterceptor = new NeedLogoutInterceptor();
 
     articleService = new ArticleService();
     memberService = new MemberService();

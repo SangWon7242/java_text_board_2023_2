@@ -1,10 +1,13 @@
 package com.sbs.exam.board;
 
 import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.interceptor.Interceptor;
 import com.sbs.exam.board.session.Session;
 import com.sbs.exam.board.vo.Member;
 import com.sbs.exam.board.vo.Rq;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -30,6 +33,10 @@ public class App {
 
       rq.setCommand(cmd);
 
+      if(runInterceptors(rq) == false) {
+        continue;
+      }
+
       if (rq.getUrlPath().equals("exit")) {
         System.out.println("== 프로그램 종료 ==");
         break;
@@ -52,5 +59,20 @@ public class App {
       }
     }
     sc.close();
+  }
+
+  private boolean runInterceptors(Rq rq) {
+    List<Interceptor> interceptors = new ArrayList<>();
+
+    interceptors.add(Container.getNeedLoginInterceptor());
+    interceptors.add(Container.getNeedLogoutInterceptor());
+
+    for(Interceptor interceptor : interceptors) {
+      if(interceptor.run(rq) == false) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
