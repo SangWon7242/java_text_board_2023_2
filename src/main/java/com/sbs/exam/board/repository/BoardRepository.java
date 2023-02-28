@@ -1,5 +1,7 @@
 package com.sbs.exam.board.repository;
 
+import com.sbs.exam.board.util.Util;
+import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.vo.Board;
 
 import java.util.ArrayList;
@@ -20,5 +22,16 @@ public class BoardRepository {
       }
     }
     return null;
+  }
+
+  public int make(String code, String name) {
+    int id = lastId + 1;
+    String regDate = Util.getNowDateStr();
+    String updateDate = regDate;
+    Board board = new Board(id, regDate, updateDate, code, name);
+    boards.add(board);
+    lastId = id;
+
+    return id;
   }
 }

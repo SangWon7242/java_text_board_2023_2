@@ -18,6 +18,11 @@ public class UsrArticleController {
     articleService = Container.getArticleService();
     boardService = Container.getBoardService();
 
+    makeTestData();
+  }
+
+  private void makeTestData() {
+    boardService.makeTestData();
     articleService.makeTestData();
   }
 

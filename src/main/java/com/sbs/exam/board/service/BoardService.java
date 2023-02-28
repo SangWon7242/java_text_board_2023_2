@@ -10,6 +10,16 @@ public class BoardService {
   public BoardService() {
     boardRepository = Container.getBoardRepository();
   }
+
+  public void makeTestData() {
+    make("notice", "공지사항");
+    make("free", "자유");
+  }
+
+  public int make(String code, String name) {
+    return boardRepository.make(code, name);
+  }
+
   public Board getBoardById(int boardId) {
     return boardRepository.getBoardById(boardId);
   }
