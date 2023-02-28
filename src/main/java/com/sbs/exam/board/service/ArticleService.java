@@ -16,12 +16,12 @@ public class ArticleService {
     for(int i = 0; i < 100; i++) {
       String title = "제목" + (i + 1);
       String body = "내용" + (i + 1);
-      write(1, title, body);
+      write(1, 1, title, body);
     }
   }
 
-  public int write(int boardId, String title, String body) {
-    return articleRepository.write(boardId, title, body);
+  public int write(int boardId, int loginedMemberId, String title, String body) {
+    return articleRepository.write(boardId, loginedMemberId, title, body);
   }
 
   public List<Article> getArticles(String searchKeyword, String orderBy) {

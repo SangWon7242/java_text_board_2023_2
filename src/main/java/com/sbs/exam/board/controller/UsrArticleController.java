@@ -68,7 +68,9 @@ public class UsrArticleController {
     System.out.printf("내용 : ");
     String body = Container.getSc().nextLine();
 
-    int id = articleService.write(1, title, body);
+    int loginedMemberId = rq.getLoginedMemberId();
+
+    int id = articleService.write(1, loginedMemberId, title, body);
 
     System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
@@ -92,6 +94,7 @@ public class UsrArticleController {
     System.out.printf("번호 : %s\n", foundArticle.getId());
     System.out.printf("제목 : %s\n", foundArticle.getTitle());
     System.out.printf("내용 : %s\n", foundArticle.getBody());
+    System.out.printf("작성자 : %d번 회원\n", foundArticle.getMemberId());
   }
 
   public void showList(Rq rq) {

@@ -88,4 +88,8 @@ public class Rq {
   public void logout() {
     removeSessionAttr("loginedMember");
   }
+
+  public int getLoginedMemberId() {
+    return getLoginedMember().getId();
+  }
 }
