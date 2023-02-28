@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 public class Article {
   private int id;
+  private int boardId;
   private String title;
   private String body;
 }
