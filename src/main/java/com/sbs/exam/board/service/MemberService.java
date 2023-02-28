@@ -1,5 +1,6 @@
 package com.sbs.exam.board.service;
 
+import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.repository.MemberRepository;
 import com.sbs.exam.board.vo.Member;
 
@@ -7,7 +8,7 @@ public class MemberService {
   private MemberRepository memberRepository;
 
   public MemberService() {
-    memberRepository = new MemberRepository();
+    memberRepository = Container.getMemberRepository();
   }
 
   public void makeTestData() {

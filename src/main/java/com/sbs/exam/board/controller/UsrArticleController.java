@@ -1,8 +1,10 @@
 package com.sbs.exam.board.controller;
 
 import com.sbs.exam.board.service.ArticleService;
+import com.sbs.exam.board.service.BoardService;
 import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.vo.Board;
 import com.sbs.exam.board.vo.Rq;
 import com.sbs.exam.board.util.Util;
 
@@ -11,9 +13,10 @@ import java.util.List;
 
 public class UsrArticleController {
   private ArticleService articleService;
-
+  private BoardService boardService;
   public UsrArticleController() {
-    articleService = new ArticleService();
+    articleService = Container.getArticleService();
+    boardService = Container.getBoardService();
 
     articleService.makeTestData();
   }
@@ -62,7 +65,22 @@ public class UsrArticleController {
   }
 
   public void actionWrite(Rq rq) {
-    System.out.println("== 게시물 등록 ==");
+    int boardId = rq.getIntParam("boardId", 0);
+
+    if(boardId == 0) {
+      System.out.println("boardId를 입력해주세요.");
+      return;
+    }
+
+    Board board = boardService.getBoardById(boardId);
+
+    if(board == null) {
+      System.out.println("존재하지 않는 게시판 번호입니다.");
+      return;
+    }
+
+    System.out.printf("== %s 게시판 글작성 ==\n", board.getName());
+
     System.out.printf("제목 : ");
     String title = Container.getSc().nextLine();
     System.out.printf("내용 : ");

@@ -1,5 +1,6 @@
 package com.sbs.exam.board.service;
 
+import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.repository.ArticleRepository;
 import com.sbs.exam.board.vo.Article;
 
@@ -9,7 +10,7 @@ public class ArticleService {
   private ArticleRepository articleRepository;
 
   public ArticleService() {
-    articleRepository = new ArticleRepository();
+    articleRepository = Container.getArticleRepository();
   }
 
   public void makeTestData() {
