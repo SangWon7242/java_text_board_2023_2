@@ -11,12 +11,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
+  private void forTestLoginByMemberId(int id) {
+    Member member = Container.getMemberService().getMemberById(id);
+    new Rq().login(member);
+  }
 
   public void run() {
     Scanner sc = Container.getSc();
 
     System.out.println("== 게시판 v 0.1 ==");
     System.out.println("== 프로그램 시작 ==");
+
+    forTestLoginByMemberId(1);
 
     while (true) {
       Rq rq = new Rq();
@@ -60,6 +66,8 @@ public class App {
     }
     sc.close();
   }
+
+
 
   private boolean runInterceptors(Rq rq) {
     List<Interceptor> interceptors = new ArrayList<>();
