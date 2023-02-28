@@ -2,6 +2,7 @@ package com.sbs.exam.board.controller;
 
 import com.sbs.exam.board.service.ArticleService;
 import com.sbs.exam.board.service.BoardService;
+import com.sbs.exam.board.service.MemberService;
 import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.vo.Board;
@@ -14,9 +15,12 @@ import java.util.List;
 public class UsrArticleController {
   private ArticleService articleService;
   private BoardService boardService;
+  private MemberService memberService;
+
   public UsrArticleController() {
     articleService = Container.getArticleService();
     boardService = Container.getBoardService();
+    memberService = Container.getMemberService();
 
     makeTestData();
   }
@@ -88,7 +92,9 @@ public class UsrArticleController {
       return;
     }
 
-    System.out.printf("== %s 게시판 글작성 ==\n", board.getName());
+    String boarName = board == null ? "전체" : board.getCode();
+
+    System.out.printf("== %s 게시판 글작성 ==\n", boarName);
 
     System.out.printf("제목 : ");
     String title = Container.getSc().nextLine();
@@ -117,13 +123,14 @@ public class UsrArticleController {
       return;
     }
 
+
     System.out.println("- 게시물 상세내용 -");
     System.out.printf("번호 : %s\n", foundArticle.getId());
     System.out.printf("날짜 : %s\n", foundArticle.getRegDate());
     System.out.printf("수정날짜 : %s\n", foundArticle.getUpdateDate());
     System.out.printf("제목 : %s\n", foundArticle.getTitle());
     System.out.printf("내용 : %s\n", foundArticle.getBody());
-    System.out.printf("작성자 : %d번 회원\n", foundArticle.getMemberId());
+    System.out.printf("작성자 : %s 회원\n", foundArticle.getMemberId());
   }
 
   public void showList(Rq rq) {
@@ -132,15 +139,26 @@ public class UsrArticleController {
 
     System.out.println("- 게시물 리스트 -");
     System.out.println("-----------------");
-    System.out.println("번호 / 날짜 / 제목");
+    System.out.println("번호 / 게시판 / 제목 / 작성자 / 작성일 /");
 
     List<Article> articles = articleService.getArticles(searchKeyword, orderBy);
 
     for( Article article : articles) {
-      System.out.printf("%d / %s / %s\n", article.getId(), article.getRegDate(), article.getTitle());
+      String boardName = getBoardNameByBoardId(article.getBoardId());
+      String writeName = getWriteNameByBoardId(article.getMemberId());
+
+      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), boardName, article.getTitle(), writeName, article.getRegDate() );
     }
 
     System.out.println("-----------------");
+  }
+
+  private String getWriteNameByBoardId(int memberId) {
+    return memberService.getMemberById(memberId).getLoginId();
+  }
+
+  private String getBoardNameByBoardId(int boardId) {
+    return boardService.getBoardById(boardId).getName();
   }
 
 }
