@@ -15,18 +15,7 @@ public class ArticleRepository {
     articles = new ArrayList<>();
   }
 
-//  private boolean searchOptionsMatched(Article article, int boarId) {
-//    if(boarId != 0) {
-//      if(article.getBoardId() != boarId) {
-//        return false;
-//      }
-//    }
-//
-//    return true;
-//  }
-
-
-  public List<Article> getArticles(String searchKeyword, String orderBy, int boardId) {
+  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode) {
 
     if (orderBy.equals("idAsc")) {
       return articles;
@@ -36,10 +25,6 @@ public class ArticleRepository {
 
     if (orderBy.equals("idDesc")) {
       sortedArticles = Util.reverseList(articles);
-    }
-
-    if(boardId == 0) {
-      return sortedArticles;
     }
 
     List<Article> boardArticles = new ArrayList<>();
@@ -53,7 +38,7 @@ public class ArticleRepository {
       return boardArticles;
     }
 
-    if (searchKeyword.length() == 0) {
+    if (boardId == 0 && searchKeyword.length() == 0) {
       return sortedArticles;
     }
 
@@ -61,11 +46,26 @@ public class ArticleRepository {
 
     if (searchKeyword.length() > 0) {
       for (Article article : sortedArticles) {
-        boolean matched = article.getTitle().contains(searchKeyword) || article.getBody().contains(searchKeyword);
-
-        if (matched) {
-          filteredArticles.add(article);
+        switch (searchKeywordTypeCode) {
+          case "body":
+            if(!article.getBody().contains(searchKeyword)) {
+              continue;
+            }
+            break;
+          case "title":
+            if(!article.getTitle().contains(searchKeyword)) {
+              continue;
+            }
+            break;
+          case "title,body":
+            if(!article.getTitle().contains(searchKeyword) && !article.getBody().contains(searchKeyword)) {
+              continue;
+            }
+            break;
         }
+
+        filteredArticles.add(article);
+
       }
     }
 

@@ -136,6 +136,7 @@ public class UsrArticleController {
 
   public void showList(Rq rq) {
     String searchKeyword = rq.getParam("searchKeyword", "");
+    String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "");
     String orderBy = rq.getParam("orderBy", "idDesc");
     int boardId = rq.getIntParam("boardId", 0);
 
@@ -156,7 +157,7 @@ public class UsrArticleController {
     System.out.println("-----------------");
     System.out.println("번호 / 게시판 / 제목 / 작성자 / 작성일 /");
 
-    List<Article> articles = articleService.getArticles(searchKeyword, orderBy, boardId);
+    List<Article> articles = articleService.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode);
 
     for( Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
