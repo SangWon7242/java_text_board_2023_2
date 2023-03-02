@@ -14,8 +14,21 @@ public class ArticleRepository {
     lastId = 0;
     articles = new ArrayList<>();
   }
-  public List<Article> getArticles(String searchKeyword, String orderBy) {
-    if(orderBy.equals("idAsc")) {
+
+//  private boolean searchOptionsMatched(Article article, int boarId) {
+//    if(boarId != 0) {
+//      if(article.getBoardId() != boarId) {
+//        return false;
+//      }
+//    }
+//
+//    return true;
+//  }
+
+
+  public List<Article> getArticles(String searchKeyword, String orderBy, int boardId) {
+
+    if (orderBy.equals("idAsc")) {
       return articles;
     }
 
@@ -25,17 +38,32 @@ public class ArticleRepository {
       sortedArticles = Util.reverseList(articles);
     }
 
-    if(searchKeyword.length() == 0) {
+    if(boardId == 0) {
+      return sortedArticles;
+    }
+
+    List<Article> boardArticles = new ArrayList<>();
+
+    if(boardId > 0) {
+      for(Article article : sortedArticles) {
+        if(article.getBoardId() == boardId) {
+          boardArticles.add(article);
+        }
+      }
+      return boardArticles;
+    }
+
+    if (searchKeyword.length() == 0) {
       return sortedArticles;
     }
 
     List<Article> filteredArticles = new ArrayList<>();
 
-    if(searchKeyword.length() > 0) {
-      for(Article article : sortedArticles) {
+    if (searchKeyword.length() > 0) {
+      for (Article article : sortedArticles) {
         boolean matched = article.getTitle().contains(searchKeyword) || article.getBody().contains(searchKeyword);
 
-        if(matched) {
+        if (matched) {
           filteredArticles.add(article);
         }
       }
@@ -56,8 +84,8 @@ public class ArticleRepository {
   }
 
   public Article getArticleById(int id) {
-    for(Article article : articles) {
-      if(article.getId() == id) {
+    for (Article article : articles) {
+      if (article.getId() == id) {
         return article;
       }
     }
@@ -67,7 +95,7 @@ public class ArticleRepository {
   public void deleteArticleById(int id) {
     Article article = getArticleById(id);
 
-    if( article != null ) {
+    if (article != null) {
       articles.remove(article);
     }
   }

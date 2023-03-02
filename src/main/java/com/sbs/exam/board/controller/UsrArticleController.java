@@ -103,7 +103,7 @@ public class UsrArticleController {
 
     int loginedMemberId = rq.getLoginedMemberId();
 
-    int id = articleService.write(1, loginedMemberId, title, body);
+    int id = articleService.write(boardId, loginedMemberId, title, body);
 
     System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
@@ -137,18 +137,32 @@ public class UsrArticleController {
   public void showList(Rq rq) {
     String searchKeyword = rq.getParam("searchKeyword", "");
     String orderBy = rq.getParam("orderBy", "idDesc");
+    int boardId = rq.getIntParam("boardId", 0);
 
-    System.out.println("- 게시물 리스트 -");
+    Board board = null;
+
+    if(boardId != 0) {
+      board = boardService.getBoardById(boardId);
+    }
+
+    if(board == null && boardId > 0) {
+      System.out.println("해당 게시판 번호는 존재하지 않습니다.");
+      return;
+    }
+
+    String boarName = board == null ? "전체" : board.getCode();
+
+    System.out.printf("- %s 게시물 리스트 -\n", boarName);
     System.out.println("-----------------");
     System.out.println("번호 / 게시판 / 제목 / 작성자 / 작성일 /");
 
-    List<Article> articles = articleService.getArticles(searchKeyword, orderBy);
+    List<Article> articles = articleService.getArticles(searchKeyword, orderBy, boardId);
 
     for( Article article : articles) {
-      String boardName = getBoardNameByBoardId(article.getBoardId());
+      String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 
-      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), boardName, article.getTitle(), writeName, article.getRegDate() );
+      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate());
     }
 
     System.out.println("-----------------");
