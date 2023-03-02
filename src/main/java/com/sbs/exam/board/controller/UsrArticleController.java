@@ -153,11 +153,11 @@ public class UsrArticleController {
 
     String boarName = board == null ? "전체" : board.getCode();
 
-    System.out.printf("- %s 게시물 리스트 -\n", boarName);
+    List<Article> articles = articleService.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode);
+
+    System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, articles.size());
     System.out.println("-----------------");
     System.out.println("번호 / 게시판 / 제목 / 작성자 / 작성일 /");
-
-    List<Article> articles = articleService.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode);
 
     for( Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
