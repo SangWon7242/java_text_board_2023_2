@@ -38,16 +38,16 @@ public class UsrArticleController {
       return;
     }
 
-    Article foundArticle = articleService.getArticleById(id);
+    Article article = articleService.getArticleById(id);
 
-    if (foundArticle == null) {
+    if (article == null) {
       System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
       return;
     }
 
     articleService.deleteArticleById(id);
 
-    System.out.printf("%d번 게시물을 삭제하였습니다.\n", foundArticle.getId());
+    System.out.printf("%d번 게시물을 삭제하였습니다.\n", article.getId());
   }
 
   public void actionModify(Rq rq) {
@@ -116,21 +116,23 @@ public class UsrArticleController {
       return;
     }
 
-    Article foundArticle = articleService.getArticleById(id);
+    Article article = articleService.getArticleById(id);
 
-    if (foundArticle == null) {
+    if (article == null) {
       System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
       return;
     }
 
-    String writerName = memberService.getWriteNameByBoardId(foundArticle.getMemberId());
+    String writerName = memberService.getWriteNameByBoardId(article.getMemberId());
+    articleService.increaseHitCount(article.getId());
 
     System.out.println("- 게시물 상세내용 -");
-    System.out.printf("번호 : %s\n", foundArticle.getId());
-    System.out.printf("날짜 : %s\n", foundArticle.getRegDate());
-    System.out.printf("수정날짜 : %s\n", foundArticle.getUpdateDate());
-    System.out.printf("제목 : %s\n", foundArticle.getTitle());
-    System.out.printf("내용 : %s\n", foundArticle.getBody());
+    System.out.printf("번호 : %s\n", article.getId());
+    System.out.printf("날짜 : %s\n", article.getRegDate());
+    System.out.printf("수정날짜 : %s\n", article.getUpdateDate());
+    System.out.printf("조회수 : %d\n", article.getHitCount());
+    System.out.printf("제목 : %s\n", article.getTitle());
+    System.out.printf("내용 : %s\n", article.getBody());
     System.out.printf("작성자 : %s\n", writerName);
   }
 
@@ -160,13 +162,13 @@ public class UsrArticleController {
 
     System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, totalItemsCount);
     System.out.println("-----------------");
-    System.out.println("번호 / 게시판 / 제목 / 작성자 / 작성일 /");
+    System.out.println("번호 / 게시판 / 제목 / 작성자 /       작성일      /   조회수");
 
     for( Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 
-      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate());
+      System.out.printf("%d / %s / %s / %s / %s / %3d\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate(), article.getHitCount());
     }
 
     System.out.println("-----------------");

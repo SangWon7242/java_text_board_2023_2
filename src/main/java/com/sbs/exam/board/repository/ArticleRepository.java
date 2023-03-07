@@ -89,7 +89,7 @@ public class ArticleRepository {
     int id = lastId + 1;
     String regDate = Util.getNowDateStr();
     String updateDate = regDate;
-    Article article = new Article(id, regDate, updateDate, boardId, loginedMemberId, title, body);
+    Article article = new Article(id, regDate, updateDate, boardId, loginedMemberId, title, body, 0);
     articles.add(article);
     lastId = id;
 
@@ -133,5 +133,9 @@ public class ArticleRepository {
     }
 
     return totalItemsCount;
+  }
+
+  public void increaseHitCount(int id) {
+    getArticleById(id).setHitCount(getArticleById(id).getHitCount() + 1);
   }
 }
