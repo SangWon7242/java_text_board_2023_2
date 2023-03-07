@@ -47,4 +47,9 @@ public class Util {
     }
     return reverse;
   }
+
+  public static int getRandomInt(int start, int end) {
+    int size = end - start + 1;
+    return start + (int) (Math.random() * size);
+  }
 }

@@ -2,6 +2,7 @@ package com.sbs.exam.board.service;
 
 import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.repository.ArticleRepository;
+import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
 
 import java.util.List;
@@ -17,12 +18,12 @@ public class ArticleService {
     for(int i = 0; i < 100; i++) {
       String title = "제목" + (i + 1);
       String body = "내용" + (i + 1);
-      write(i % 2 + 1, i % 2 + 1, title, body);
+      writeForTestData(i % 2 + 1, i % 2 + 1, title, body, Util.getRandomInt(1, 100));
     }
   }
 
-  public int write(int boardId, int loginedMemberId, String title, String body) {
-    return articleRepository.write(boardId, loginedMemberId, title, body);
+  public int writeForTestData(int boardId, int loginedMemberId, String title, String body, int hitCount) {
+    return articleRepository.write(boardId, loginedMemberId, title, body, hitCount);
   }
 
   public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode, int page, int pageItemCount) {

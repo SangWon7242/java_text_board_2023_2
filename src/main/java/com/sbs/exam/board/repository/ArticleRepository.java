@@ -85,11 +85,11 @@ public class ArticleRepository {
     return filteredArticles;
   }
 
-  public int write(int boardId, int loginedMemberId, String title, String body) {
+  public int write(int boardId, int loginedMemberId, String title, String body, int hitCount) {
     int id = lastId + 1;
     String regDate = Util.getNowDateStr();
     String updateDate = regDate;
-    Article article = new Article(id, regDate, updateDate, boardId, loginedMemberId, title, body, 0);
+    Article article = new Article(id, regDate, updateDate, boardId, loginedMemberId, title, body, hitCount);
     articles.add(article);
     lastId = id;
 

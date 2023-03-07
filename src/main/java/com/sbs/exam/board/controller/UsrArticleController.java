@@ -103,7 +103,7 @@ public class UsrArticleController {
 
     int loginedMemberId = rq.getLoginedMemberId();
 
-    int id = articleService.write(boardId, loginedMemberId, title, body);
+    int id = articleService.writeForTestData(boardId, loginedMemberId, title, body, 0);
 
     System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
@@ -162,7 +162,7 @@ public class UsrArticleController {
 
     System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, totalItemsCount);
     System.out.println("-----------------");
-    System.out.println("번호 / 게시판 / 제목 / 작성자 /       작성일      /   조회수");
+    System.out.println("번호 / 게시판 / 제목 / 작성자 /       작성일     /  조회수");
 
     for( Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
