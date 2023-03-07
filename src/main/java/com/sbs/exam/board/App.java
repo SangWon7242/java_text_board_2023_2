@@ -36,7 +36,6 @@ public class App {
       System.out.printf("%s) ", promptName);
       String cmd = Container.getSc().nextLine();
 
-
       rq.setCommand(cmd);
 
       if(runInterceptors(rq) == false) {

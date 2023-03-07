@@ -139,6 +139,8 @@ public class UsrArticleController {
     String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "");
     String orderBy = rq.getParam("orderBy", "idDesc");
     int boardId = rq.getIntParam("boardId", 0);
+    int page = rq.getIntParam("page", 1);
+    int pageItemCount = 10;
 
     Board board = null;
 
@@ -153,7 +155,7 @@ public class UsrArticleController {
 
     String boarName = board == null ? "전체" : board.getCode();
 
-    List<Article> articles = articleService.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode);
+    List<Article> articles = articleService.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode, page, pageItemCount);
 
     System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, articles.size());
     System.out.println("-----------------");

@@ -15,8 +15,9 @@ public class ArticleRepository {
     articles = new ArrayList<>();
   }
 
-  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode) {
+  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode, int limitStart, int limitCount) {
 
+    // 정렬 로직 시작
     if (orderBy.equals("idAsc")) {
       return articles;
     }
@@ -26,7 +27,9 @@ public class ArticleRepository {
     if (orderBy.equals("idDesc")) {
       sortedArticles = Util.reverseList(articles);
     }
+    // 정렬 로직 끝
 
+    // boardId 로직 시작
     List<Article> boardArticles = new ArrayList<>();
 
     if(boardId > 0) {
@@ -37,14 +40,12 @@ public class ArticleRepository {
       }
       return boardArticles;
     }
-
-    if (boardId == 0 && searchKeyword.length() == 0) {
-      return sortedArticles;
-    }
+    // boardId 로직 끝
 
     List<Article> filteredArticles = new ArrayList<>();
+    int dataIndex = 0;
 
-    if (searchKeyword.length() > 0) {
+    if (searchKeyword.length() >= 0) {
       for (Article article : sortedArticles) {
         switch (searchKeywordTypeCode) {
           case "body":
@@ -64,7 +65,15 @@ public class ArticleRepository {
             break;
         }
 
-        filteredArticles.add(article);
+        if(dataIndex >= limitStart) {
+          filteredArticles.add(article);
+        }
+
+        dataIndex++;
+
+        if(filteredArticles.size() == limitCount) {
+          break;
+        }
 
       }
     }

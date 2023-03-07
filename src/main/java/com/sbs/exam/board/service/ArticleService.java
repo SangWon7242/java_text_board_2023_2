@@ -25,8 +25,10 @@ public class ArticleService {
     return articleRepository.write(boardId, loginedMemberId, title, body);
   }
 
-  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode) {
-    return articleRepository.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode);
+  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode, int page, int pageItemCount) {
+    int limitStart = (page - 1) * pageItemCount;
+    int limitCount = pageItemCount;
+    return articleRepository.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode, limitStart, limitCount);
   }
 
   public Article getArticleById(int id) {
