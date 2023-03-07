@@ -15,7 +15,37 @@ public class ArticleRepository {
     articles = new ArrayList<>();
   }
 
-  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode, int limitStart, int limitCount) {
+  private boolean searchOptionsMatched(Article article, int boardId, String searchKeywordTypeCode, String searchKeyword) {
+    if (boardId != 0) {
+      if(article.getBoardId() != boardId) {
+        return false;
+      }
+    }
+
+    if (searchKeyword.length() > 0) {
+      switch (searchKeywordTypeCode) {
+        case "body":
+          if (!article.getBody().contains(searchKeyword)) {
+            return false;
+          }
+          break;
+        case "title":
+          if (!article.getTitle().contains(searchKeyword)) {
+            return false;
+          }
+          break;
+        case "title,body":
+          if (!article.getTitle().contains(searchKeyword) && !article.getBody().contains(searchKeyword)) {
+            return false;
+          }
+          break;
+      }
+    }
+    return true;
+  }
+
+  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode,
+                                   int limitStart, int limitCount) {
 
     // 정렬 로직 시작
     if (orderBy.equals("idAsc")) {
@@ -29,52 +59,22 @@ public class ArticleRepository {
     }
     // 정렬 로직 끝
 
-    // boardId 로직 시작
-    List<Article> boardArticles = new ArrayList<>();
-
-    if(boardId > 0) {
-      for(Article article : sortedArticles) {
-        if(article.getBoardId() == boardId) {
-          boardArticles.add(article);
-        }
-      }
-      return boardArticles;
-    }
-    // boardId 로직 끝
-
     List<Article> filteredArticles = new ArrayList<>();
     int dataIndex = 0;
 
-    if (searchKeyword.length() >= 0) {
-      for (Article article : sortedArticles) {
-        switch (searchKeywordTypeCode) {
-          case "body":
-            if(!article.getBody().contains(searchKeyword)) {
-              continue;
-            }
-            break;
-          case "title":
-            if(!article.getTitle().contains(searchKeyword)) {
-              continue;
-            }
-            break;
-          case "title,body":
-            if(!article.getTitle().contains(searchKeyword) && !article.getBody().contains(searchKeyword)) {
-              continue;
-            }
-            break;
-        }
+    for (Article article : sortedArticles) {
+      if(searchOptionsMatched(article, boardId, searchKeywordTypeCode, searchKeyword) == false) {
+        continue;
+      }
 
-        if(dataIndex >= limitStart) {
-          filteredArticles.add(article);
-        }
+      if (dataIndex >= limitStart) {
+        filteredArticles.add(article);
+      }
 
-        dataIndex++;
+      dataIndex++;
 
-        if(filteredArticles.size() == limitCount) {
-          break;
-        }
-
+      if (filteredArticles.size() == limitCount) {
+        break;
       }
     }
 
@@ -115,5 +115,19 @@ public class ArticleRepository {
     article.setTitle(title);
     article.setBody(body);
     article.setUpdateDate(Util.getNowDateStr());
+  }
+
+  public int getTotalItemsCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
+    int totalItemsCount = 0;
+
+    for (Article article : articles) {
+      if (searchOptionsMatched(article, boardId, searchKeywordTypeCode, searchKeyword) == false) {
+        continue;
+      }
+
+      totalItemsCount++;
+    }
+
+    return totalItemsCount;
   }
 }

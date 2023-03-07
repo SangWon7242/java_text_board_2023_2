@@ -155,9 +155,10 @@ public class UsrArticleController {
 
     String boarName = board == null ? "전체" : board.getCode();
 
+    int totalItemsCount = articleService.getTotalItemsCount(boardId, searchKeywordTypeCode, searchKeyword);
     List<Article> articles = articleService.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode, page, pageItemCount);
 
-    System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, articles.size());
+    System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, totalItemsCount);
     System.out.println("-----------------");
     System.out.println("번호 / 게시판 / 제목 / 작성자 / 작성일 /");
 

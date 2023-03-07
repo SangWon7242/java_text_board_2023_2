@@ -42,4 +42,8 @@ public class ArticleService {
   public void modify(int id, String title, String body) {
     articleRepository.modify(id, title, body);
   }
+
+  public int getTotalItemsCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
+    return articleRepository.getTotalItemsCount(boardId, searchKeywordTypeCode, searchKeyword);
+  }
 }
