@@ -44,20 +44,24 @@ public class ArticleRepository {
     return true;
   }
 
-  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode,
-                                   int limitStart, int limitCount) {
+  private List<Article> getSortedArticles(String orderBy) {
+    List<Article> sortedArticles = articles;
 
-    // 정렬 로직 시작
     if (orderBy.equals("idAsc")) {
       return articles;
     }
 
-    List<Article> sortedArticles = articles;
-
     if (orderBy.equals("idDesc")) {
       sortedArticles = Util.reverseList(articles);
     }
-    // 정렬 로직 끝
+
+    return sortedArticles;
+  }
+
+  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode,
+                                   int limitStart, int limitCount) {
+
+    List<Article> sortedArticles = getSortedArticles(orderBy);
 
     List<Article> filteredArticles = new ArrayList<>();
     int dataIndex = 0;

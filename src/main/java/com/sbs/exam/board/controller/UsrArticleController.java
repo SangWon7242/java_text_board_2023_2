@@ -177,7 +177,7 @@ public class UsrArticleController {
   }
 
   private String getBoardNameByBoardId(int boardId) {
-    return boardService.getBoardById(boardId).getName();
+    return boardService.getBoardById(boardId).getCode();
   }
 
 }

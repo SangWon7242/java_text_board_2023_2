@@ -28,8 +28,10 @@ public class BoardRepository {
     int id = lastId + 1;
     String regDate = Util.getNowDateStr();
     String updateDate = regDate;
+
     Board board = new Board(id, regDate, updateDate, code, name);
     boards.add(board);
+
     lastId = id;
 
     return id;
