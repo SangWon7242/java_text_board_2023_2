@@ -14,6 +14,10 @@ public class NeedLoginInterceptor implements Interceptor {
       case "/usr/article/modify":
       case "/usr/article/delete":
       case "/usr/member/logout":
+      case "/usr/like/like":
+      case "/usr/like/cancelLike":
+      case "/usr/like/dislike":
+      case "/usr/like/cancelDislike":
         System.out.println("로그인 후 이용해주세요.");
         return false;
     }

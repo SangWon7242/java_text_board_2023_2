@@ -10,15 +10,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class Article {
+public class Like {
   private int id;
   private String regDate;
   private String updateDate;
-  private int boardId;
+  private String relTypeCode;
+  private int relId;
   private int memberId;
-  private String title;
-  private String body;
-  private int hitCount;
-  private int likePoint;
-  private int dislikePoint;
+  private int point;
 }

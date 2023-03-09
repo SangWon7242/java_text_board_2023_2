@@ -61,7 +61,16 @@ public class App {
         Container.getUsrMemberController().actionLogin(rq);
       } else if (rq.getUrlPath().equals("/usr/member/logout")) {
         Container.getUsrMemberController().actionLogout(rq);
+      } else if (rq.getUrlPath().equals("/usr/like/like")) {
+        Container.getUsrLikeController().actionLike(rq);
+      } else if (rq.getUrlPath().equals("/usr/like/cancelLike")) {
+        Container.getUsrLikeController().actionCancelLike(rq);
+      } else if (rq.getUrlPath().equals("/usr/like/dislike")) {
+        Container.getUsrLikeController().actionDisLike(rq);
+      } else if (rq.getUrlPath().equals("/usr/like/cancelDislike")) {
+        Container.getUsrLikeController().actionCancelDislike(rq);
       }
+
     }
     sc.close();
   }

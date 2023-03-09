@@ -97,7 +97,7 @@ public class ArticleRepository {
     int id = lastId + 1;
     String regDate = Util.getNowDateStr();
     String updateDate = regDate;
-    Article article = new Article(id, regDate, updateDate, boardId, loginedMemberId, title, body, hitCount);
+    Article article = new Article(id, regDate, updateDate, boardId, loginedMemberId, title, body, hitCount, 0, 0);
     articles.add(article);
     lastId = id;
 
@@ -144,6 +144,27 @@ public class ArticleRepository {
   }
 
   public void increaseHitCount(int id) {
-    getArticleById(id).setHitCount(getArticleById(id).getHitCount() + 1);
+    Article article = getArticleById(id);
+    article.setHitCount(article.getHitCount() + 1);
+  }
+
+  public void increaseLikePoint(int id) {
+    Article article = getArticleById(id);
+    article.setLikePoint(article.getLikePoint() + 1);
+  }
+
+  public void decreaseLikePoint(int id) {
+    Article article = getArticleById(id);
+    article.setLikePoint(article.getLikePoint() - 1);
+  }
+
+  public void increaseDislikePoint(int id) {
+    Article article = getArticleById(id);
+    article.setDislikePoint(article.getDislikePoint() + 1);
+  }
+
+  public void decreaseDislikePoint(int id) {
+    Article article = getArticleById(id);
+    article.setDislikePoint(article.getDislikePoint() - 1);
   }
 }

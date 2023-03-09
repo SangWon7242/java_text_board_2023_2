@@ -131,6 +131,8 @@ public class UsrArticleController {
     System.out.printf("날짜 : %s\n", article.getRegDate());
     System.out.printf("수정날짜 : %s\n", article.getUpdateDate());
     System.out.printf("조회수 : %d\n", article.getHitCount());
+    System.out.printf("좋아요 : %d\n", article.getLikePoint());
+    System.out.printf("싫어요 : %d\n", article.getDislikePoint());
     System.out.printf("제목 : %s\n", article.getTitle());
     System.out.printf("내용 : %s\n", article.getBody());
     System.out.printf("작성자 : %s\n", writerName);
@@ -163,13 +165,13 @@ public class UsrArticleController {
 
     System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, totalItemsCount);
     System.out.println("-----------------");
-    System.out.println("번호 / 게시판 /   제목  / 작성자 /       작성일       /  조회수");
+    System.out.println("번호 / 게시판 /   제목  / 작성자 /       작성일       /  조회수 / 좋아요 / 싫어요 / ");
 
     for( Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 
-      System.out.printf("%4d / %4s / %5s / %s / %6s / %4d\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate(), article.getHitCount());
+      System.out.printf("%4d / %4s / %5s / %s / %6s / %7d / %6d / %3d\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate(), article.getHitCount(), article.getLikePoint(), article.getDislikePoint());
     }
 
     System.out.println("-----------------");
