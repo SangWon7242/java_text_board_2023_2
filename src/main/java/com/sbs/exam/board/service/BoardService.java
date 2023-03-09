@@ -12,7 +12,7 @@ public class BoardService {
   }
 
   public void makeTestData() {
-    make("notice", "공지사항");
+    make("notice", "공지");
     make("free", "자유");
   }
 

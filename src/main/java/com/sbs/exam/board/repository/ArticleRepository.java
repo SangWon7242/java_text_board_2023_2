@@ -4,7 +4,9 @@ import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ArticleRepository {
   private List<Article> articles;
@@ -44,24 +46,30 @@ public class ArticleRepository {
     return true;
   }
 
-  private List<Article> getSortedArticles(String orderBy) {
-    List<Article> sortedArticles = articles;
-
-    if (orderBy.equals("idAsc")) {
+  private List<Article> getSortedArticles(String orderByColumn, String orderBy) {
+    if (orderByColumn.equals("id") && orderBy.equals("idAsc")) {
       return articles;
     }
 
-    if (orderBy.equals("idDesc")) {
+    List<Article> sortedArticles = articles;
+
+    if (orderByColumn.equals("id") && orderBy.equals("idDesc")) {
       sortedArticles = Util.reverseList(articles);
+    }
+    else if (orderByColumn.equals("hitCount") && orderBy.equals("idAsc")) {
+      return sortedArticles.stream().sorted(Comparator.comparing(Article::getHitCount)).collect(Collectors.toList());
+    }
+    else if (orderByColumn.equals("hitCount") && orderBy.equals("idDesc")) {
+      return sortedArticles.stream().sorted(Comparator.comparing(Article::getHitCount).reversed()).collect(Collectors.toList());
     }
 
     return sortedArticles;
   }
 
-  public List<Article> getArticles(String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode,
+  public List<Article> getArticles(String orderByColumn, String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode,
                                    int limitStart, int limitCount) {
 
-    List<Article> sortedArticles = getSortedArticles(orderBy);
+    List<Article> sortedArticles = getSortedArticles(orderByColumn, orderBy);
 
     List<Article> filteredArticles = new ArrayList<>();
     int dataIndex = 0;

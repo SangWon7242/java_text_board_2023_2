@@ -137,9 +137,10 @@ public class UsrArticleController {
   }
 
   public void showList(Rq rq) {
+    String orderByColumn = rq.getParam("orderByColumn", "id");
+    String orderBy = rq.getParam("orderBy", "idDesc");
     String searchKeyword = rq.getParam("searchKeyword", "");
     String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "");
-    String orderBy = rq.getParam("orderBy", "idDesc");
     int boardId = rq.getIntParam("boardId", 0);
     int page = rq.getIntParam("page", 1);
     int pageItemCount = 10;
@@ -158,17 +159,17 @@ public class UsrArticleController {
     String boarName = board == null ? "전체" : board.getCode();
 
     int totalItemsCount = articleService.getTotalItemsCount(boardId, searchKeywordTypeCode, searchKeyword);
-    List<Article> articles = articleService.getArticles(orderBy, boardId, searchKeyword, searchKeywordTypeCode, page, pageItemCount);
+    List<Article> articles = articleService.getArticles(orderByColumn, orderBy, boardId, searchKeyword, searchKeywordTypeCode, page, pageItemCount);
 
     System.out.printf("- %s 게시물 리스트(%d건) -\n", boarName, totalItemsCount);
     System.out.println("-----------------");
-    System.out.println("번호 / 게시판 / 제목 / 작성자 /       작성일     /  조회수");
+    System.out.println("번호 / 게시판 /   제목  / 작성자 /       작성일       /  조회수");
 
     for( Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 
-      System.out.printf("%d / %s / %s / %s / %s / %3d\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate(), article.getHitCount());
+      System.out.printf("%4d / %4s / %5s / %s / %6s / %4d\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate(), article.getHitCount());
     }
 
     System.out.println("-----------------");
