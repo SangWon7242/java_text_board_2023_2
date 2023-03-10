@@ -20,7 +20,7 @@ public class ArticleService {
   }
 
   public void makeTestData() {
-    for(int i = 0; i < 100; i++) {
+    for(int i = 0; i < 4; i++) {
       String title = "제목" + (i + 1);
       String body = "내용" + (i + 1);
       int id = write(i % 2 + 1, i % 2 + 1, title, body, Util.getRandomInt(1, 100));
@@ -44,8 +44,13 @@ public class ArticleService {
     }
   }
 
-  public int write(int boardId, int loginedMemberId, String title, String body, int hitCount) {
-    return articleRepository.write(boardId, loginedMemberId, title, body, hitCount);
+  private int write(int boardId, int loginedMemberId, String title, String body, int hitCount) {
+    String keywordsStr = Util.getKeywordsStrFormStr(body);
+    return articleRepository.write(boardId, loginedMemberId, title, body, keywordsStr, hitCount);
+  }
+
+  public int write(int boardId, int loginedMemberId, String title, String body) {
+    return write(boardId, loginedMemberId, title, body, 0);
   }
 
   public List<Article> getArticles(String orderByColumn, String orderBy, int boardId, String searchKeyword, String searchKeywordTypeCode, int page, int pageItemCount) {
@@ -63,7 +68,8 @@ public class ArticleService {
   }
 
   public void modify(int id, String title, String body) {
-    articleRepository.modify(id, title, body);
+    String keywordsStr = Util.getKeywordsStrFormStr(body);
+    articleRepository.modify(id, title, body, keywordsStr);
   }
 
   public int getTotalItemsCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {

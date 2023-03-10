@@ -1,5 +1,10 @@
 package com.sbs.exam.board.util;
 
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import kr.co.shineware.nlp.komoran.core.Komoran;
+import kr.co.shineware.nlp.komoran.model.KomoranResult;
+import kr.co.shineware.nlp.komoran.model.Token;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -82,5 +87,50 @@ public class Util {
   public static int getRandomInt(int start, int end) {
     int size = end - start + 1;
     return start + (int) (Math.random() * size);
+  }
+
+  public static String getKeywordsStrFormStr(String str) {
+    String keywordsStr = "";
+
+    List<String> keywords = Util.getKeywordsFromStr(str);
+
+    for(String keyword : keywords) {
+      keywordsStr += " #" + keyword;
+    }
+
+    keywordsStr = keywordsStr.trim();
+
+    return keywordsStr;
+  }
+  public static List<String> getKeywordsFromStr(String str) {
+    List<String> keywords = new ArrayList<>();
+
+    Komoran komoran = new Komoran(DEFAULT_MODEL.EXPERIMENT);
+    String strToAnalyze = str;
+
+    KomoranResult analyzeResultList = komoran.analyze(strToAnalyze);
+
+    List<Token> tokenList = analyzeResultList.getTokenList();
+    for (Token token : tokenList) {
+
+      String keyword = token.getMorph();
+      String pos = token.getPos();
+
+      switch (keyword) {
+        case "어제":
+        case "동시":
+        case "이":
+          continue;
+      }
+
+      switch (pos) {
+        case "NNP":
+        case "NNG":
+          keywords.add(keyword);
+          break;
+      }
+    }
+
+    return keywords;
   }
 }

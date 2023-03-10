@@ -66,13 +66,13 @@ public class UsrArticleController {
     }
 
     System.out.printf("새 제목 : ");
-    String newTitle = Container.getSc().nextLine().trim();
+    String title = Container.getSc().nextLine().trim();
     System.out.printf("새 내용 : ");
-    String newBody = Container.getSc().nextLine().trim();
+    String body = Container.getSc().nextLine().trim();
 
     article.setUpdateDate(Util.getNowDateStr());
 
-    articleService.modify(article.getId(), newTitle, newBody);
+    articleService.modify(article.getId(), title, body);
 
     System.out.printf("%d번 게시물을 수정하였습니다.\n", article.getId());
   }
@@ -103,7 +103,7 @@ public class UsrArticleController {
 
     int loginedMemberId = rq.getLoginedMemberId();
 
-    int id = articleService.write(boardId, loginedMemberId, title, body, 0);
+    int id = articleService.write(boardId, loginedMemberId, title, body);
 
     System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
@@ -134,6 +134,7 @@ public class UsrArticleController {
     System.out.printf("좋아요 : %d\n", article.getGoodlikePoint());
     System.out.printf("싫어요 : %d\n", article.getDislikePoint());
     System.out.printf("제목 : %s\n", article.getTitle());
+    System.out.printf("키워드 : %s\n", article.getKeywordStr());
     System.out.printf("내용 : %s\n", article.getBody());
     System.out.printf("작성자 : %s\n", writerName);
   }
