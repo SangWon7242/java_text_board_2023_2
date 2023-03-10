@@ -10,7 +10,7 @@ public class LikeService {
   private LikeRepository likeRepository;
   private ArticleService articleService;
 
-  public LikeService() {
+  public void init() {
     likeRepository = Container.getLikeRepository();
     articleService = Container.getArticleService();
   }

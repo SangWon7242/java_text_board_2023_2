@@ -4,10 +4,12 @@ import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.repository.MemberRepository;
 import com.sbs.exam.board.vo.Member;
 
+import java.util.List;
+
 public class MemberService {
   private MemberRepository memberRepository;
 
-  public MemberService() {
+  public void init() {
     memberRepository = Container.getMemberRepository();
   }
 
@@ -34,5 +36,9 @@ public class MemberService {
 
   public String getWriteNameByBoardId(int memberId) {
     return memberRepository.getWriteNameByBoardId(memberId);
+  }
+
+  public List<Member> getMembers() {
+    return memberRepository.getMembers();
   }
 }

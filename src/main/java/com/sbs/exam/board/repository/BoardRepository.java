@@ -11,7 +11,7 @@ public class BoardRepository {
   private List<Board> boards;
   private int lastId;
 
-  public BoardRepository() {
+  public void init() {
     boards = new ArrayList<>();
     lastId = 0;
   }

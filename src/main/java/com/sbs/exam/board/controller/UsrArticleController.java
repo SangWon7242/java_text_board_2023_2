@@ -17,7 +17,7 @@ public class UsrArticleController {
   private BoardService boardService;
   private MemberService memberService;
 
-  public UsrArticleController() {
+  public void init() {
     articleService = Container.getArticleService();
     boardService = Container.getBoardService();
     memberService = Container.getMemberService();
@@ -33,7 +33,7 @@ public class UsrArticleController {
   public void actionDelete(Rq rq) {
     int id = rq.getIntParam("id", 0);
 
-    if(id == 0) {
+    if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
@@ -53,7 +53,7 @@ public class UsrArticleController {
   public void actionModify(Rq rq) {
     int id = rq.getIntParam("id", 0);
 
-    if(id == 0) {
+    if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
@@ -80,14 +80,14 @@ public class UsrArticleController {
   public void actionWrite(Rq rq) {
     int boardId = rq.getIntParam("boardId", 0);
 
-    if(boardId == 0) {
+    if (boardId == 0) {
       System.out.println("boardId를 입력해주세요.");
       return;
     }
 
     Board board = boardService.getBoardById(boardId);
 
-    if(board == null) {
+    if (board == null) {
       System.out.println("존재하지 않는 게시판 번호입니다.");
       return;
     }
@@ -103,7 +103,7 @@ public class UsrArticleController {
 
     int loginedMemberId = rq.getLoginedMemberId();
 
-    int id = articleService.writeForTestData(boardId, loginedMemberId, title, body, 0);
+    int id = articleService.write(boardId, loginedMemberId, title, body, 0);
 
     System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
   }
@@ -111,7 +111,7 @@ public class UsrArticleController {
   public void actionDetail(Rq rq) {
     int id = rq.getIntParam("id", 0);
 
-    if(id == 0) {
+    if (id == 0) {
       System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
@@ -149,11 +149,11 @@ public class UsrArticleController {
 
     Board board = null;
 
-    if(boardId != 0) {
+    if (boardId != 0) {
       board = boardService.getBoardById(boardId);
     }
 
-    if(board == null && boardId > 0) {
+    if (board == null && boardId > 0) {
       System.out.println("해당 게시판 번호는 존재하지 않습니다.");
       return;
     }
@@ -167,11 +167,13 @@ public class UsrArticleController {
     System.out.println("-----------------");
     System.out.println("번호 / 게시판 /   제목  / 작성자 /       작성일       /  조회수 / 좋아요 / 싫어요 / ");
 
-    for( Article article : articles) {
+    for (Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 
-      System.out.printf("%4d / %4s / %5s / %s / %6s / %7d / %6d / %3d\n", article.getId(), articleBoardName, article.getTitle(), writeName, article.getRegDate(), article.getHitCount(), article.getLikePoint(), article.getDislikePoint());
+      System.out.printf("%4d / %4s / %5s / %s / %6s / %7d / %6d / %3d\n",
+          article.getId(), articleBoardName, article.getTitle(), writeName,
+          article.getRegDate(), article.getHitCount(), article.getLikePoint(), article.getDislikePoint());
     }
 
     System.out.println("-----------------");

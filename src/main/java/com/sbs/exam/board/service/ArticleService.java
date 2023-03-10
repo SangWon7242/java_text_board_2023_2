@@ -4,25 +4,47 @@ import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.repository.ArticleRepository;
 import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
+import com.sbs.exam.board.vo.Member;
 
 import java.util.List;
 
 public class ArticleService {
   private ArticleRepository articleRepository;
+  private MemberService memberService;
+  private LikeService likeService;
 
-  public ArticleService() {
+  public void init() {
     articleRepository = Container.getArticleRepository();
+    memberService = Container.getMemberService();
+    likeService = Container.getLikeService();
   }
 
   public void makeTestData() {
     for(int i = 0; i < 100; i++) {
       String title = "제목" + (i + 1);
       String body = "내용" + (i + 1);
-      writeForTestData(i % 2 + 1, i % 2 + 1, title, body, Util.getRandomInt(1, 100));
+      int id = write(i % 2 + 1, i % 2 + 1, title, body, Util.getRandomInt(1, 100));
+      Article article = getArticleById(id);
+
+      makeArticleEtcTestData(article);
     }
   }
 
-  public int writeForTestData(int boardId, int loginedMemberId, String title, String body, int hitCount) {
+  private void makeArticleEtcTestData(Article article) {
+    List<Member> members = memberService.getMembers();
+
+    for(Member member : members) {
+      int no = Util.getRandomInt(1, 3);
+
+      if(no == 1) {
+        likeService.like("article", article.getId(), member.getId());
+      } else if(no == 2) {
+        likeService.dislike("article", article.getId(), member.getId());
+      }
+    }
+  }
+
+  public int write(int boardId, int loginedMemberId, String title, String body, int hitCount) {
     return articleRepository.write(boardId, loginedMemberId, title, body, hitCount);
   }
 

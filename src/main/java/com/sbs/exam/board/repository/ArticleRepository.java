@@ -12,7 +12,7 @@ public class ArticleRepository {
   private List<Article> articles;
   private int lastId;
 
-  public ArticleRepository() {
+  public void init() {
     lastId = 0;
     articles = new ArrayList<>();
   }

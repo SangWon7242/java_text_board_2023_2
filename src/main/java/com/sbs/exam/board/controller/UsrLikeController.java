@@ -10,7 +10,7 @@ public class UsrLikeController {
 
   private LikeService likeService;
 
-  public UsrLikeController() {
+  public void init() {
     likeService = Container.getLikeService();
   }
   public void actionLike(Rq rq) {

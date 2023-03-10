@@ -74,6 +74,24 @@ public class Container {
     usrArticleController = new UsrArticleController();
     usrMemberController = new UsrMemberController();
     usrLikeController = new UsrLikeController();
+
+    // 초기화
+    memberRepository.init();
+    boardRepository.init();
+    likeRepository.init();
+    articleRepository.init();
+
+    memberService.init();
+    boardService.init();
+    likeService.init();
+    articleService.init();
+
+    needLoginInterceptor.init();
+    needLogoutInterceptor.init();
+
+    usrMemberController.init();
+    usrLikeController.init();
+    usrArticleController.init();
   }
 
   public static Session getSession() {

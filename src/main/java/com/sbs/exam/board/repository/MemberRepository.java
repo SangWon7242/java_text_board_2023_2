@@ -11,7 +11,7 @@ public class MemberRepository {
   private List<Member> members;
   private int lastId;
 
-  public MemberRepository() {
+  public void init() {
     lastId = 0;
     members = new ArrayList<>();
   }
@@ -52,5 +52,9 @@ public class MemberRepository {
       }
     }
     return "";
+  }
+
+  public List<Member> getMembers() {
+    return members;
   }
 }

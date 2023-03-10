@@ -7,7 +7,7 @@ import com.sbs.exam.board.vo.Board;
 public class BoardService {
   private BoardRepository boardRepository;
 
-  public BoardService() {
+  public void init() {
     boardRepository = Container.getBoardRepository();
   }
 

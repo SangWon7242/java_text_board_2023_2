@@ -20,4 +20,7 @@ public class NeedLogoutInterceptor implements Interceptor {
 
     return true;
   }
+
+  public void init() {
+  }
 }

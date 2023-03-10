@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UsrMemberController {
   private MemberService memberService;
-  public UsrMemberController() {
+  public void init() {
     memberService = Container.getMemberService();
 
     memberService.makeTestData();

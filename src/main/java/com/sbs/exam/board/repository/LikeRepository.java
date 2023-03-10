@@ -11,7 +11,7 @@ public class LikeRepository {
   private List<Like> likes;
   private int lastId;
 
-  public LikeRepository() {
+  public void init() {
     lastId = 0;
     likes = new ArrayList<>();
   }

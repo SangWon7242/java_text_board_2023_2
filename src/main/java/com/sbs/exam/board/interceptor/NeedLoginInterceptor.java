@@ -24,4 +24,7 @@ public class NeedLoginInterceptor implements Interceptor {
 
     return true;
   }
+
+  public void init() {
+  }
 }
