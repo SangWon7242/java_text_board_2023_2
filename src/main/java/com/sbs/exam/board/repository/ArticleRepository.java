@@ -62,6 +62,18 @@ public class ArticleRepository {
     else if (orderByColumn.equals("hitCount") && orderBy.equals("idDesc")) {
       return sortedArticles.stream().sorted(Comparator.comparing(Article::getHitCount).reversed()).collect(Collectors.toList());
     }
+    else if (orderByColumn.equals("goodlikePoint") && orderBy.equals("idAsc")) {
+      return sortedArticles.stream().sorted(Comparator.comparing(Article::getGoodlikePoint)).collect(Collectors.toList());
+    }
+    else if (orderByColumn.equals("goodlikePoint") && orderBy.equals("idDesc")) {
+      return sortedArticles.stream().sorted(Comparator.comparing(Article::getGoodlikePoint).reversed()).collect(Collectors.toList());
+    }
+    else if (orderByColumn.equals("dislikePoint") && orderBy.equals("idAsc")) {
+      return sortedArticles.stream().sorted(Comparator.comparing(Article::getDislikePoint)).collect(Collectors.toList());
+    }
+    else if (orderByColumn.equals("dislikePoint") && orderBy.equals("idDesc")) {
+      return sortedArticles.stream().sorted(Comparator.comparing(Article::getDislikePoint).reversed()).collect(Collectors.toList());
+    }
 
     return sortedArticles;
   }
