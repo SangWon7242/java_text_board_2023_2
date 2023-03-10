@@ -41,6 +41,11 @@ public class ArticleRepository {
             return false;
           }
           break;
+        case "keyword":
+          if (!article.getKeywordsStr().contains(searchKeyword) && !article.getKeywordsStr().contains(searchKeyword)) {
+            return false;
+          }
+          break;
       }
     }
     return true;
@@ -138,7 +143,7 @@ public class ArticleRepository {
 
     article.setTitle(title);
     article.setBody(body);
-    article.setKeywordStr(keywordsStr);
+    article.setKeywordsStr(keywordsStr);
     article.setUpdateDate(Util.getNowDateStr());
   }
 
@@ -184,6 +189,6 @@ public class ArticleRepository {
   public void updateKeywordsStrAsync(int id, String keywordsStr) {
     Article article = getArticleById(id);
 
-    article.setKeywordStr(keywordsStr);
+    article.setKeywordsStr(keywordsStr);
   }
 }

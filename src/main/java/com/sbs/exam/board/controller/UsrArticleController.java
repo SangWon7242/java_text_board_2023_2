@@ -134,7 +134,7 @@ public class UsrArticleController {
     System.out.printf("좋아요 : %d\n", article.getGoodlikePoint());
     System.out.printf("싫어요 : %d\n", article.getDislikePoint());
     System.out.printf("제목 : %s\n", article.getTitle());
-    System.out.printf("키워드 : %s\n", article.getKeywordStr());
+    System.out.printf("키워드 : %s\n", article.getKeywordsStr());
     System.out.printf("내용 : %s\n", article.getBody());
     System.out.printf("작성자 : %s\n", writerName);
   }
