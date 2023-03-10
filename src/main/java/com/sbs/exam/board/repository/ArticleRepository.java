@@ -150,12 +150,12 @@ public class ArticleRepository {
 
   public void increaseLikePoint(int id) {
     Article article = getArticleById(id);
-    article.setLikePoint(article.getLikePoint() + 1);
+    article.setGoodlikePoint(article.getGoodlikePoint() + 1);
   }
 
   public void decreaseLikePoint(int id) {
     Article article = getArticleById(id);
-    article.setLikePoint(article.getLikePoint() - 1);
+    article.setGoodlikePoint(article.getGoodlikePoint() - 1);
   }
 
   public void increaseDislikePoint(int id) {

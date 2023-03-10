@@ -14,7 +14,7 @@ public class LikeService {
     likeRepository = Container.getLikeRepository();
     articleService = Container.getArticleService();
   }
-  public Map<String, Object> like(String relTypeCode, int relId, int memberId) {
+  public Map<String, Object> goodlike(String relTypeCode, int relId, int memberId) {
     Article article = null;
 
     if(relTypeCode.equals("article")) {
@@ -25,24 +25,24 @@ public class LikeService {
       }
     }
 
-    int summaryLikePoint = likeRepository.getSummaryLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
+    int likePoint = likeRepository.getLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
 
-    if(summaryLikePoint > 0) {
+    if(likePoint > 0) {
       return Map.of("resultCode", "F-1", "msg", "이미 좋아요 처리가 되었습니다.");
-    } else if(summaryLikePoint < 0) {
+    } else if(likePoint < 0) {
       return Map.of("resultCode", "F-2", "msg", "이미 싫어요 처리가 되어있습니다.");
     }
 
-    likeRepository.like(relTypeCode, relId, memberId);
+    likeRepository.goodlike(relTypeCode, relId, memberId);
 
     if(relTypeCode.equals("article")) {
-      articleService.increaseLikePoint(relId);
+      articleService.increaseGoodlikePoint(relId);
     }
 
     return Map.of("resultCode", "S-1", "msg", "좋아요 처리가 되었습니다.");
   }
 
-  public Map<String, Object> cancelLike(String relTypeCode, int relId, int memberId) {
+  public Map<String, Object> cancelGoodlike(String relTypeCode, int relId, int memberId) {
     Article article = null;
 
     if(relTypeCode.equals("article")) {
@@ -53,16 +53,16 @@ public class LikeService {
       }
     }
 
-    int summaryLikePoint = likeRepository.getSummaryLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
+    int likePoint = likeRepository.getLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
 
-    if(summaryLikePoint == 0) {
+    if(likePoint == 0) {
       return Map.of("resultCode", "F-1", "msg", "기존에 좋아요를 하지 않았습니다.");
     }
 
-    likeRepository.removeItem(relTypeCode, relId, memberId);
+    likeRepository.deleteItem(relTypeCode, relId, memberId);
 
     if(relTypeCode.equals("article")) {
-      articleService.decreaseLikePoint(relId);
+      articleService.decreaseGoodlikePoint(relId);
     }
 
     return Map.of("resultCode", "S-1", "msg", "좋아요 취소 처리가 되었습니다.");
@@ -79,11 +79,11 @@ public class LikeService {
       }
     }
 
-    int summaryLikePoint = likeRepository.getSummaryLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
+    int likePoint = likeRepository.getLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
 
-    if(summaryLikePoint > 0) {
+    if(likePoint > 0) {
       return Map.of("resultCode", "F-1", "msg", "이미 좋아요 처리가 되었습니다.");
-    } else if(summaryLikePoint < 0) {
+    } else if(likePoint < 0) {
       return Map.of("resultCode", "F-2", "msg", "이미 싫어요 처리가 되어있습니다.");
     }
 
@@ -107,13 +107,13 @@ public class LikeService {
       }
     }
 
-    int summaryLikePoint = likeRepository.getSummaryLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
+    int likePoint = likeRepository.getLikePointByRelTypeCodeAndRelIdAndMemberId(relTypeCode, relId, memberId);
 
-    if(summaryLikePoint == 0) {
+    if(likePoint == 0) {
       return Map.of("resultCode", "F-1", "msg", "기존에 싫어요를 하지 않았습니다.");
     }
 
-    likeRepository.removeItem(relTypeCode, relId, memberId);
+    likeRepository.deleteItem(relTypeCode, relId, memberId);
 
     if(relTypeCode.equals("article")) {
       articleService.decreaseDislikePoint(relId);

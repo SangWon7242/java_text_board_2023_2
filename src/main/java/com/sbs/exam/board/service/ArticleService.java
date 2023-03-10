@@ -37,7 +37,7 @@ public class ArticleService {
       int no = Util.getRandomInt(1, 3);
 
       if(no == 1) {
-        likeService.like("article", article.getId(), member.getId());
+        likeService.goodlike("article", article.getId(), member.getId());
       } else if(no == 2) {
         likeService.dislike("article", article.getId(), member.getId());
       }
@@ -74,11 +74,11 @@ public class ArticleService {
     articleRepository.increaseHitCount(id);
   }
 
-  public void increaseLikePoint(int id) {
+  public void increaseGoodlikePoint(int id) {
     articleRepository.increaseLikePoint(id);
   }
 
-  public void decreaseLikePoint(int id) {
+  public void decreaseGoodlikePoint(int id) {
     articleRepository.decreaseLikePoint(id);
   }
 

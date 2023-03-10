@@ -27,7 +27,7 @@ public class UsrLikeController {
       return;
     }
 
-    Map<String, Object> rs = likeService.like(relTypeCode, relId, rq.getLoginedMemberId());
+    Map<String, Object> rs = likeService.goodlike(relTypeCode, relId, rq.getLoginedMemberId());
 
     String rsMsg = (String) rs.get("msg");
     System.out.println(rsMsg);
@@ -47,7 +47,7 @@ public class UsrLikeController {
       return;
     }
 
-    Map<String, Object> rs = likeService.cancelLike(relTypeCode, relId, rq.getLoginedMemberId());
+    Map<String, Object> rs = likeService.cancelGoodlike(relTypeCode, relId, rq.getLoginedMemberId());
 
     String rsMsg = (String) rs.get("msg");
     System.out.println(rsMsg);

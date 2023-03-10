@@ -131,7 +131,7 @@ public class UsrArticleController {
     System.out.printf("날짜 : %s\n", article.getRegDate());
     System.out.printf("수정날짜 : %s\n", article.getUpdateDate());
     System.out.printf("조회수 : %d\n", article.getHitCount());
-    System.out.printf("좋아요 : %d\n", article.getLikePoint());
+    System.out.printf("좋아요 : %d\n", article.getGoodlikePoint());
     System.out.printf("싫어요 : %d\n", article.getDislikePoint());
     System.out.printf("제목 : %s\n", article.getTitle());
     System.out.printf("내용 : %s\n", article.getBody());
@@ -173,7 +173,7 @@ public class UsrArticleController {
 
       System.out.printf("%4d / %4s / %5s / %s / %6s / %7d / %6d / %3d\n",
           article.getId(), articleBoardName, article.getTitle(), writeName,
-          article.getRegDate(), article.getHitCount(), article.getLikePoint(), article.getDislikePoint());
+          article.getRegDate(), article.getHitCount(), article.getGoodlikePoint(), article.getDislikePoint());
     }
 
     System.out.println("-----------------");
