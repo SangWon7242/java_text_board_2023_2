@@ -119,7 +119,12 @@ public class Util {
       switch (keyword) {
         case "어제":
         case "동시":
+        case "은":
+        case "는":
         case "이":
+        case "가":
+        case "을":
+        case "를":
           continue;
       }
 

@@ -180,4 +180,10 @@ public class ArticleRepository {
     Article article = getArticleById(id);
     article.setDislikePoint(article.getDislikePoint() - 1);
   }
+
+  public void updateKeywordsStrAsync(int id, String keywordsStr) {
+    Article article = getArticleById(id);
+
+    article.setKeywordStr(keywordsStr);
+  }
 }

@@ -6,7 +6,9 @@ import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.vo.Member;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ArticleService {
   private ArticleRepository articleRepository;
@@ -20,13 +22,21 @@ public class ArticleService {
   }
 
   public void makeTestData() {
-    for(int i = 0; i < 4; i++) {
-      String title = "제목" + (i + 1);
-      String body = "내용" + (i + 1);
+
+    List<Map<String, Object>> testData = new ArrayList<>();
+    testData.add(Util.mapOf("title", "안녕하세요. 저는 홍길동 입니다.", "body", "저는 애플제품을 좋아합니다. 오랜 아이폰 유저인 저는..."));
+    testData.add(Util.mapOf("title", "안녕하세요. 저는 홍길순 입니다.", "body", "저는 백엔드 웹 개발자로 5년 동안 근무하고 있는 개발자입니다. 저는 JAVA를 참 좋아합니다."));;
+
+    int i = 0;
+    for(Map<String, Object> testDataRow : testData ) {
+      String title = (String) testDataRow.get("title");
+      String body = (String) testDataRow.get("body");
+
       int id = write(i % 2 + 1, i % 2 + 1, title, body, Util.getRandomInt(1, 100));
       Article article = getArticleById(id);
 
       makeArticleEtcTestData(article);
+      i++;
     }
   }
 
@@ -45,8 +55,19 @@ public class ArticleService {
   }
 
   private int write(int boardId, int loginedMemberId, String title, String body, int hitCount) {
-    String keywordsStr = Util.getKeywordsStrFormStr(body);
-    return articleRepository.write(boardId, loginedMemberId, title, body, keywordsStr, hitCount);
+    int id = articleRepository.write(boardId, loginedMemberId, title, body, "", hitCount);
+
+    updateKeywordsStrAsync(id);
+
+    return id;
+  }
+
+  private void updateKeywordsStrAsync(int id) {
+    new Thread(() -> {
+      Article article = getArticleById(id);
+      String keywordsStr = Util.getKeywordsStrFormStr(article.getBody());
+      articleRepository.updateKeywordsStrAsync(id, keywordsStr);
+    }).start();
   }
 
   public int write(int boardId, int loginedMemberId, String title, String body) {
